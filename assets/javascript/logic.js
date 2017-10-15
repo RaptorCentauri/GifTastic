@@ -4,7 +4,7 @@ var animateGif;
 
 
 for (i=0; i<topics.length; i++){
-	$(".button-box").append(`<button class=topicSearch data-name="${topics[i]}">- ${topics[i]}</button>`);
+	$(".button-box").append(`<button class=topicSearch data-name="${topics[i]}">${topics[i]}</button>`);
 	// var searchQuery = $(".topicSearch").data(`name`);
 }
 
@@ -12,12 +12,35 @@ for (i=0; i<topics.length; i++){
 var results;
 // var searchQuery;
 
+$(document.body).on("click", ".hamburger-button", function(){
+
+	if($(".button-box").css(`visibility`) == `hidden`){
+		$(".button-box").css(`visibility`,`visible`);
+		$(".results-box").css(`grid-column-start`, `2`);
+	}
+
+	else{
+		$(".button-box").css(`visibility`,`hidden`);
+		$(".results-box").css(`grid-column-start`, `1`);
+	}
+
+	// else if($(".button-box").css(`visibility`) == `visible`){
+	// 	$(".button-box").css(`visibility`,`hidden`);
+	// }
+
+
+
+})
+
 $(".search-button").on("click", function(){
 	event.preventDefault();
 	seachValue = $("#gif-search").val().trim();
+
 	console.log(seachValue);
 
-	$(".button-box").append(`<button class=topicSearch data-name="${seachValue}">- ${seachValue}</button>`);
+	$("#gif-search").val("");
+
+	$(".button-box").append(`<button class=topicSearch data-name="${seachValue}">${seachValue}</button>`);
 	// var searchQuery = $(".topicSearch").data(`name`);
 
 
@@ -60,7 +83,6 @@ $(document.body).on("click", ".gif", function(){
 		$(this).attr('data-state', 'still');   
 	}
 	
-
 })
 
 
