@@ -1,25 +1,61 @@
 var topics = ["Rugrats", "Ducktales", `Dark Wing Duck`, "Hey Arnold", "Ned's Newt", "Tailspin", "Digimon"];
+var stillGif;
+var animateGif;
 
 
 for (i=0; i<topics.length; i++){
-	$(".button-box").append(`<button class=topicSearch data-name=${topics[i]}>${topics[i]}</button>`);
+	$(".button-box").append(`<button class=topicSearch data-name="${topics[i]}">${topics[i]}</button>`);
+	// var searchQuery = $(".topicSearch").data(`name`);
 }
 
-var searchQuery = $(".topicSearch").data();
+
 var results;
+// var searchQuery;
+
+$(".search-button").on("click", function(){
+	event.preventDefault();
+	seachValue = $("#gifSearch").val().trim();
+	console.log(seachValue);
+
+	$(".button-box").append(`<button class=topicSearch data-name="${seachValue}">${seachValue}</button>`);
+	// var searchQuery = $(".topicSearch").data(`name`);
 
 
-$(".topicSearch").on("click", function(){ getGif(searchQuery);})
+})
 
 
+$(".topicSearch").on("click", function(){ 
+
+	searchQuery = $(this).data(`name`);
+
+	getGif(searchQuery);
+	
+})
 
 
+$(document.body).on("click", ".gif", function(){
 
-// $.get("https://api.giphy.com/v1/gifs/search?", {api_key:"inMvyNCFgyQC1dyf6cQvHVk3djujZ24O", q:`${searchQuery}`, limit:"10"}).done(function(response){
 
-// 	console.log(response.data);
+	var state = $(this).attr('data-state');
 
-// });
+		console.log(`data-state: ${state}`);
+
+	if(state === 'still'){
+		console.log("animate url: " + $(this).attr('data-animate'));
+		$(this).attr("src", $(this).attr('data-animate'));
+		// $(this).attr("src", $(this).attr(animateGif));
+
+	    $(this).attr('data-state', 'animate');
+	}
+
+	if(state === 'animate'){
+		$(this).attr("src", $(this).attr('data-still'));
+		$(this).attr('data-state', 'still');   
+	}
+	
+
+})
+
 
 
 function getGif(search){
@@ -28,12 +64,17 @@ function getGif(search){
 
 
 	results = response.data;
-	$(".results-box").append(`<img src=${results[2].images.fixed_height_still.url}>`);
-	$(".results-box").append(results[0].rating);
 
+	for(i=0; i<10; i++){
 
-	console.log(results);
-	console.log(results[3].images.fixed_height_still.url);
+		stillGif = results[i].images.fixed_height_still.url;
+		animateGif = results[i].images.fixed_height.url;
+
+		$(".results-box").append(`<img src=${stillGif} data-still=${stillGif} data-animate=${animateGif} data-state=still class=gif>`);
+		// $(".results-box").append(results[i].rating);
+		// console.log(`Search: ${searchQuery}`);
+		
+	}
 
 	});
 }
