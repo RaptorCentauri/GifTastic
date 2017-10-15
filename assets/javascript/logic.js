@@ -4,7 +4,7 @@ var animateGif;
 
 
 for (i=0; i<topics.length; i++){
-	$(".button-box").append(`<button class=topicSearch data-name="${topics[i]}">${topics[i]}</button>`);
+	$(".button-box").append(`<button class=topicSearch data-name="${topics[i]}">- ${topics[i]}</button>`);
 	// var searchQuery = $(".topicSearch").data(`name`);
 }
 
@@ -14,19 +14,25 @@ var results;
 
 $(".search-button").on("click", function(){
 	event.preventDefault();
-	seachValue = $("#gifSearch").val().trim();
+	seachValue = $("#gif-search").val().trim();
 	console.log(seachValue);
 
-	$(".button-box").append(`<button class=topicSearch data-name="${seachValue}">${seachValue}</button>`);
+	$(".button-box").append(`<button class=topicSearch data-name="${seachValue}">- ${seachValue}</button>`);
 	// var searchQuery = $(".topicSearch").data(`name`);
 
 
 })
 
 
-$(".topicSearch").on("click", function(){ 
+$(document.body).on("click", ".topicSearch", function(){
+
+
+	$(".results-box").empty();
 
 	searchQuery = $(this).data(`name`);
+
+	console.log(`You searched Giphy for: ${searchQuery}`);
+
 
 	getGif(searchQuery);
 	
@@ -34,6 +40,7 @@ $(".topicSearch").on("click", function(){
 
 
 $(document.body).on("click", ".gif", function(){
+
 
 
 	var state = $(this).attr('data-state');
@@ -59,6 +66,8 @@ $(document.body).on("click", ".gif", function(){
 
 
 function getGif(search){
+
+
 
 	$.get("https://api.giphy.com/v1/gifs/search?", {api_key:"inMvyNCFgyQC1dyf6cQvHVk3djujZ24O", q:`${search}`, limit:"10"}).done(function(response){
 
