@@ -1,5 +1,5 @@
 // Variable Declarations
-var topics = ["Rugrats", "Ducktales", `Dark Wing Duck`, "Hey Arnold", "Ned's Newt", "Tailspin", "Digimon"];
+var topics = [`Rugrats`, `Ducktales`, `Dark Wing Duck`, `Hey Arnold`, `Ned's Newt`, `Tailspin`, `Digimon`];
 var stillGif;
 var animateGif;
 var results;
@@ -23,7 +23,10 @@ function getGif(search){
 		animateGif = results[i].images.fixed_height.url;
 		rating = results[i].rating;
 
+
 		$(".results-box").append(`<div class=gif-box><img src=${stillGif} data-still=${stillGif} data-animate=${animateGif} data-state=still class=gif><div class=rating>Rated: ${rating}</div></div>`);
+
+		// $(".results-box").append(`<img src=${stillGif} data-still=${stillGif} data-animate=${animateGif} data-state=still class=gif><div class=rating>Rated: ${rating}</div>`);
 
 		// $(".results-box").append(`<div class=rating>Rated: ${rating}</div>`);
 	
@@ -52,9 +55,6 @@ $(document.body).on("click", ".hamburger-button", function(){
 		$(".results-box").css(`grid-column-start`, `1`);
 	}
 
-	// else if($(".button-box").css(`visibility`) == `visible`){
-	// 	$(".button-box").css(`visibility`,`hidden`);
-	// }
 })
 
 //Click Event for Adding Search
@@ -75,6 +75,7 @@ $(document.body).on("click", ".topicSearch", function(){
 
 	$(".results-box").empty();
 	searchQuery = $(this).data(`name`);
+	console.log(searchQuery);
 	getGif(searchQuery);	
 })
 
